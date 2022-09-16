@@ -14,7 +14,7 @@
       }
 
       a:link, a:visited{
-        color: #3585bb;
+        color: #0699fc;
       }
 
       .credit{
@@ -26,21 +26,22 @@
       }
 
       #desc-container {
-        max-width: 1000px;
+        max-width: 500px;
         max-height: 500px;
-        min-width: 400px;
-        min-height:100px;
+        min-width: 100px;
+        min-height: 50px;
         background: #fff;
         color: #000;
         border-radius: 3px;
         overflow: auto;
         -webkit-overflow-scrolling: touch;
       }
-      #cafe-container {
-        max-width: 200px;
-        max-height: 100px;
-        min-width: 20px;
-        min-height:10px;
+
+      #exit-container {
+        max-width: 500px;
+        max-height: 500px;
+        min-width: 100px;
+        min-height: 50px;
         background: #fff;
         color: #000;
         border-radius: 3px;
@@ -51,7 +52,6 @@
       #desc-container > iframe {
         border: none;
         width:100%;
-        height:80%
       }
 
       .title {
@@ -69,14 +69,12 @@
   <body>
     
     <div id="desc-container" style="display:none">
-      <iframe src="https://www.youtube.com/embed/31Dr9bybVfw"></iframe>
-      <div class="title">Welcome to Info Edge</div>
+      <div class="title">Welcome to the Cafeteria</div>
       <div class="text"></div>
     </div>
 
-    <div id="cafe-container" style="display:none">
-      <div class="title"><a href="cafe.html">Go To Cafe</a></div>
-      <div class="text"></div>
+    <div id="exit-container" style="display:none">
+      <div class="title"><a href="index.html">Go Back to Reception</a></div>
     </div>
 
     <script src="../js/three/three.min.js"></script>
@@ -87,25 +85,31 @@
       var infospot, infospot2, panorama, viewer;
 
       infospot = new PANOLENS.Infospot();
-      infospot.position.set( 1296.4046475799585, -289.7413571131348, 5000 );
-      infospot.addHoverElement(document.getElementById('cafe-container'),80);
+      infospot.position.set( 4624.572495395605, -192.65638301004012, -5000 );
+      infospot.addHoverText( 'Activity Area' );
 
       infospot2 = new PANOLENS.Infospot( 300, PANOLENS.DataImage.Info );
-      infospot2.position.set( 5000, -942.4589878646718, 51.559910351074265 );
-      infospot2.addHoverElement( document.getElementById( 'desc-container' ), 200 );
+      infospot2.position.set( 5000, -408.01448312855064, 2679.2590999135655);
+      infospot2.addHoverElement( document.getElementById( 'desc-container' ), 100 );
 
-      panorama = new PANOLENS.ImagePanorama('reception.jpg');
+      infospot3 = new PANOLENS.Infospot(200, PANOLENS.DataImage.Info);
+      infospot3.position.set(-1380.6789660951094, -273.9190882188635, 5000.000000000001);
+      infospot3.addHoverElement(document.getElementById('exit-container'),100)
+
+      panorama = new PANOLENS.ImagePanorama('cafe.jpg');
       panorama.add( infospot );
       panorama.add( infospot2 );
+      panorama.add(infospot3);
 
       panorama.addEventListener("click", function(e){
-        if (e.intersects.length > 0) return;
-        const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
-        console.log('click panorama\n', e, 'point\n', a);
-      });
+  if (e.intersects.length > 0) return;
+  const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+  console.log('click panorama\n', e, 'point\n', a);
+});
 
       viewer = new PANOLENS.Viewer();
       viewer.add( panorama );
+  
 
     </script>
 
